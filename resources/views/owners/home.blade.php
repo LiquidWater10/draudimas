@@ -12,6 +12,7 @@
                 <th>id</th>
                 <th>name</th>
                 <th>surname</th>
+                <th>cars</th>
                 <th>phone</th>
                 <th>email</th>
                 <th>address</th>
@@ -24,6 +25,12 @@
                 <td>{{$owner->id}}</td>
                 <td>{{$owner->name}}</td>
                 <td>{{$owner->surname}}</td>
+                <td>
+                    @foreach($owner->cars as $car)
+                        {{$car->brand}} {{$car->model}}
+                        <br>
+                    @endforeach
+                </td>
                 <td>{{$owner->phone}}</td>
                 <td>{{$owner->email}}</td>
                 <td>{{$owner->address}}</td>

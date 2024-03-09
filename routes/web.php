@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ownerController;
+use App\Http\Controllers\CarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,5 @@ Route::get('/delete/{id}', [ownerController::class,'delete'])->name('delete')->m
 
 Route::get('/owner/edit/{id}',[ownerController::class,'retrieve'])->name('owner.edit')->middleware('auth');
 Route::post('/owner/save/{id}',[ownerController::class,'update'])->name('owner.save')->middleware('auth');
+
+Route::resource('/cars', CarController::class)->middleware('auth');
