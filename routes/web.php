@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ownerController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\LanguageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,14 +21,20 @@ Route::get('/', function () {
 });
 
 
-Auth::routes();
+        Auth::routes();
 
-Route::get('/home', [ownerController::class, 'home'])->name('home')->middleware('auth');
-Route::get('/owner/create', [ownerController::class,'create'])->name('owner.create')->middleware('auth');
-Route::post('/owner/store', [ownerController::class,'store'])->name('owner.store')->middleware('auth');
-Route::get('/delete/{id}', [ownerController::class,'delete'])->name('delete')->middleware('auth');
+        Route::get('/home', [ownerController::class, 'home'])->name('home');
+        Route::resource('/cars', CarController::class)->only(['index']);
 
-Route::get('/owner/edit/{id}',[ownerController::class,'retrieve'])->name('owner.edit')->middleware('auth');
-Route::post('/owner/save/{id}',[ownerController::class,'update'])->name('owner.save')->middleware('auth');
 
-Route::resource('/cars', CarController::class)->middleware('auth');
+        Route::middleware(['user_type'])->group(function () {
+        Route::resource('/cars', CarController::class)->except(['index']);
+        Route::get('/owner/create', [ownerController::class, 'create'])->name('owner.create');
+        Route::post('/owner/store', [ownerController::class, 'store'])->name('owner.store');
+        Route::get('/delete/{id}', [ownerController::class, 'delete'])->name('delete');
+
+        Route::get('/owner/edit/{id}', [ownerController::class, 'retrieve'])->name('owner.edit');
+        Route::post('/owner/save/{id}', [ownerController::class, 'update'])->name('owner.save');
+        });
+        Route::get('/setLanguage/{language}', [LanguageController::class, 'setLanguage'])->name("setLanguage");
+

@@ -3,21 +3,21 @@
 @section('content')
     <div class="container ">
         <header>
-            <h1>MANAGE OWNERS</h1>
+            <h1>{{ __("MANAGE OWNERS") }}</h1>
         </header>
-        <a type="button" href="{{ route('owner.create') }}" class="btn btn-primary">Add</a>
+        <a type="button" href="{{ route('owner.create') }}" class="btn btn-primary">{{ __("Add") }}</a>
         <div class="table-responsive-md ">
         <table class="table table-hover">
             <tr>
                 <th>id</th>
-                <th>name</th>
-                <th>surname</th>
-                <th>cars</th>
-                <th>phone</th>
-                <th>email</th>
-                <th>address</th>
-                <th>Delete</th>
-                <th>Edit</th>
+                <th>{{ __("name") }}</th>
+                <th>{{ __("surname") }}</th>
+                <th>{{ __("cars") }}</th>
+                <th>{{ __("phone") }}</th>
+                <th>{{ __("email") }}</th>
+                <th>{{ __("address") }}</th>
+                <th>{{ __("Delete") }}</th>
+                <th>{{ __("Edit") }}</th>
             </tr>
             <tbody>
             @foreach($owners as $owner)

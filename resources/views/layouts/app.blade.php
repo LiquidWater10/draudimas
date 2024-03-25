@@ -31,10 +31,16 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                     <li>
-                        <a class="nav-link" href="{{ route('home') }}">Owners</a>
+                        <a class="nav-link" href="{{ route('home') }}">{{ __("Owners") }}</a>
                     </li>
                     <li>
-                        <a class="nav-link" href="{{ route('cars.index') }}">Cars</a>
+                        <a class="nav-link" href="{{ route('cars.index') }}">{{ __("Cars") }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('setLanguage','lt') }}" class="nav-link">LT</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('setLanguage','en') }}" class="nav-link">EN</a>
                     </li>
                     </ul>
 

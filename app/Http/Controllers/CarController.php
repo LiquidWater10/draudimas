@@ -80,4 +80,10 @@ class CarController extends Controller
         return redirect()->route('cars.index');
 
     }
+
+    //a constructor, which puts the auth middleware to each route, that it controls.
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 }
