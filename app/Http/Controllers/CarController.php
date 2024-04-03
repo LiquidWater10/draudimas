@@ -6,6 +6,7 @@ use App\Models\Car;
 use App\Models\owner;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Requests\CarRequest;
 
 class CarController extends Controller
 {
@@ -34,8 +35,9 @@ class CarController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CarRequest $request)
     {
+        $request->validated();
         $car=car::create($request->all());
         $car->save();
         return redirect()->route('cars.index');
@@ -64,7 +66,7 @@ class CarController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Car $car)
+    public function update(CarRequest $request, Car $car)
     {
         $car->update($request->all());
         $car->save();

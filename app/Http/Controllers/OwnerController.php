@@ -6,6 +6,7 @@ use App\Models\Car;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\owner;
+use App\Http\Requests\OwnerRequest;
 
 class OwnerController extends Controller
 {
@@ -26,8 +27,9 @@ class OwnerController extends Controller
         return view('owners.create');
     }
 
-    public function store(Request $request)
+    public function store(OwnerRequest $request)
     {
+        $request->validated();
         $owner= new owner;
         $owner->name = $request->name;
         $owner->surname = $request->surname;
@@ -52,7 +54,7 @@ class OwnerController extends Controller
             ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(OwnerRequest $request, $id)
     {
         $owner= owner::find($id);
         $owner->name = $request->name;
