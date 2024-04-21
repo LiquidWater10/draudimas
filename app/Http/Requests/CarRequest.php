@@ -17,7 +17,8 @@ class CarRequest extends FormRequest
     public function messages()
     {
         return  [
-            'reg_number'=>'The registration number is required',
+            'reg_number.required'=>'The registration number is required',
+            'reg_number'=>'Wrong registration number format',
             'brand'=>'The brand is required',
             'model'=>'The model is required',
         ];
@@ -31,7 +32,7 @@ class CarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'reg_number'=>'required|min:3|max:32',
+            'reg_number'=>['required','regex:/^[A-Z]{3}\d{3}$/'],
             'brand'=>'required|min:3|max:20',
             'model'=>'required|min:3|max:18'
         ];
