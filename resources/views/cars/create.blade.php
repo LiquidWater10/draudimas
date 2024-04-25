@@ -16,7 +16,7 @@
             </div>
         @endif
     <div class="card-body">
-    <form  method="post" action="{{route('cars.store')}}">
+    <form  method="post" action="{{route('cars.store')}}" enctype="multipart/form-data">
     <div class="mb-3 mt-3">
     @csrf
         <label for="reg_number" class="form-label">{{ __("registration number") }}:</label>
@@ -40,6 +40,10 @@
                     <option value={{$owner->id}}> {{$owner->name ." ". $owner->surname}}</option>
                 @endforeach
             </select>
+        </div>
+        <div class="mb-3">
+                <label class="form-label">{{ __("Images") }}:</label>
+                <input type="file" class="form-control" name="document" >
         </div>
         <button type="submit" class="btn btn-primary">{{ __("Submit") }}</button>
     </form>

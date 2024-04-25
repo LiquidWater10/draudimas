@@ -6,7 +6,7 @@
                     {{ __("EDIT AN EXISTING CAR") }}
                 </div>
                 <div class="card-body">
-                    <form  method="post" action="{{route('cars.update', $cars->id)}}">
+                    <form method="post" action="{{route('cars.update', $cars->id)}}">
                         @csrf
                         @method('put')
                         <div class="mb-3 mt-3">
@@ -38,6 +38,29 @@
                         </div>
                         <button class="btn btn-primary">{{ __("Submit") }}</button>
                     </form>
+                    <div class="mb-3">
+                        <div class="mt-3 mb-3">
+                        <form method="post" action="{{route('car.add_image', $cars->id)}}" enctype="multipart/form-data">
+                            @csrf
+                            <label class="form-label">{{__("Upload Images")}}:</label>
+                            <input type="file" class="form-control" name="document" required>
+                            <button class="btn btn-link">{{ __("Add") }}</button>
+                            @if($images->count() > 0)
+                                <div class="mb-3 alert alert-info">
+                                    {{ __("Images") }}
+                                    <br>
+                                    @foreach($images as $image)
+                                        <img src="{{Storage::url('documents/'.$image->file, $image->name)}}" width="50%" height="50%" alt="car_image">
+                                        <br>
+                                        {{$image->name}}
+                                        <br>
+                                    @endforeach
+                                    <a href="{{route('car.documentDelete', $cars->id)}}" class="btn btn-danger btn-sm ">{{ __("Delete") }}</a>
+                                </div>
+                            @endif
+                        </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@ class CarFactory extends Factory
     public function definition(): array
     {
         return [
-            'reg_number'=>fake()->buildingNumber,
+            'reg_number'=> $this->faker->regexify('^[A-Z]{3}\d{3}$'),
             'brand'=>fake()->company,
             'model'=>fake()->title
         ];

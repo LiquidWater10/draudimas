@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\Image;
 use App\Models\owner;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -39,9 +40,19 @@ class CarController extends Controller
     {
         $request->validated();
         $car=car::create($request->all());
+        $image= image::create();
+        if ($request->file('document')!==null){
+            $file=$request->file('document');
+            $file->store('/public/documents');
+            $image->car_id=$car->id;
+            $image->file=$file->hashName();
+            $image->name=$file->getClientOriginalName();
+        }
         $car->save();
+        $image->save();
         return redirect()->route('cars.index');
     }
+
 
     /**
      * Display the specified resource.
@@ -59,7 +70,8 @@ class CarController extends Controller
         return view('cars.edit',
             [
                 'cars'=>$car,
-                'owners'=>owner::all()
+                'owners'=>owner::all(),
+                'images'=>Image::where('car_id', $car->id)->get()
             ]);
     }
 
@@ -73,6 +85,19 @@ class CarController extends Controller
         return redirect()->route('cars.index');
     }
 
+    public function add_image(request $request,$id)
+    {
+        $image= image::create();
+        if ($request->file('document')!==null){
+            $file=$request->file('document');
+            $file->store('/public/documents');
+            $image->car_id=$id;
+            $image->file=$file->hashName();
+            $image->name=$file->getClientOriginalName();
+            $image->save();
+        }
+        return back();
+    }
     /**
      * Remove the specified resource from storage.
      */
@@ -81,6 +106,15 @@ class CarController extends Controller
         $car->delete();
         return redirect()->route('cars.index');
 
+    }
+    public function documentDelete($id){
+        $image=image::where('car_id', $id)->get();
+        foreach ($image as $image_)
+        {
+        unlink(storage_path()."/app/public/documents/".$image_->file);
+        $image_->delete();
+        }
+        return back();
     }
 
     //a constructor, which puts the auth middleware to each route, that it controls.

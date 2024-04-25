@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ownerController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,7 @@ Route::get('/', function () {
 
         Route::get('/owner/edit/{id}', [ownerController::class, 'retrieve'])->name('owner.edit');
         Route::post('/owner/save/{id}', [ownerController::class, 'update'])->name('owner.save');
+        Route::get('/cars/{id}/documentDelete',[CarController::class, 'documentDelete'])->name('car.documentDelete');
+        Route::post('/cars/{id}/document/store', [CarController::class, 'add_image'])->name('car.add_image');
         });
         Route::get('/setLanguage/{language}', [LanguageController::class, 'setLanguage'])->name("setLanguage");
-
