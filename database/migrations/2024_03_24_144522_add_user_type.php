@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('user_type')->nullable()->default(null);
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('type')->default(0);//0 - vartotojas, 1 - skaitantis vartotojas, 2 - administartorius
+        });
     }
 
     /**
@@ -23,6 +27,10 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('user_type');
+        });
+
+        Schema::table('users',function ( Blueprint $table){
+            $table->dropColumn('type');
         });
     }
 };

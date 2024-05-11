@@ -60,7 +60,23 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
-
+                        <div class="row mb-3">
+                            <label for="can_edit" class="col-md-4 col-form-label text-md-end">Can Edit middleware</label>
+                            <div class="col-md-6">
+                                <input type="hidden" id="can_edit" name="can_edit" value="cant_edit">
+                                <input type="checkbox" id="can_edit" name="can_edit" value="can_edit">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="user_type" class="col-md-4 col-form-label text-md-end">Select User type</label>
+                            <div class="col-md-6">
+                                <select name="user_type" id="user_type">
+                                    <option value="1">Simple user</option>
+                                    <option value="2">Read only user</option>
+                                    <option value="3">Administrator</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

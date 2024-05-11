@@ -10,16 +10,31 @@ use App\Http\Requests\OwnerRequest;
 
 class OwnerController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Car::class,'car');
+    }
+
     public function index(): View
     {
         return view('default');
     }
-    public function home(): View
+    public function home()
     {
-        return view('owners.home',
-            [
-                'owners'=>owner::with('cars')->get()
-            ]);
+        if(auth()->user()->can('view-owner')) {
+
+            return view('owners.home',
+                [
+                    'owners' => owner::with('cars')->get()
+                ]);
+        }
+        else{
+            $user_id= auth()->user()->id;
+            return view('owners.home',
+                [
+                    'owners' => owner::with('cars')->where('user_id', $user_id)->get()
+                ]);
+        }
     }
 
     public function create(): View
@@ -42,12 +57,16 @@ class OwnerController extends Controller
     }
     public function delete($id)
     {
+        $owner = Owner::findOrFail($id);
+        $this->authorize('delete', $owner);
         owner::destroy($id);
         return redirect()->route('home');
     }
 
     public function retrieve($id): View
     {
+        $owner= owner::findOrFail($id);
+        $this->authorize('update', $owner);
         return view('owners.edit',
             [
                 'owner'=>owner::find($id)
@@ -56,7 +75,8 @@ class OwnerController extends Controller
 
     public function update(OwnerRequest $request, $id)
     {
-        $owner= owner::find($id);
+        $owner= owner::findOrFail($id);
+        $this->authorize('update', $owner);
         $owner->name = $request->name;
         $owner->surname = $request->surname;
         $owner->phone = $request->phone;

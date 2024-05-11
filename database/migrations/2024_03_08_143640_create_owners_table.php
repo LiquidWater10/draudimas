@@ -18,7 +18,10 @@ return new class extends Migration
             $table->string("phone", 32)->nullable()->default(null);
             $table->string("email", 64)->nullable()->default(null);
             $table->string("address", 100);
+            $table->foreignId('user_id')->nullable()->default(null);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

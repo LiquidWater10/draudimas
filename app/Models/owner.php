@@ -12,4 +12,8 @@ class owner extends Model
     public function cars(){
         return $this->hasMany(Car::class);
     }
+
+    public function users(){
+        return $this->belongsTo(User::class);
+    }
 }

@@ -35,9 +35,15 @@
                 <td>{{$owner->email}}</td>
                 <td>{{$owner->address}}</td>
                 <td>
+                    @can('delete-owner',$owner)
                     <a type="button" href="{{ route('delete', $owner->id)}}" class="btn btn-danger">Delete</a>
+                    @endcan
                 </td>
-                    <td><a type="button" href="{{ route('owner.edit', $owner->id)}}" class="btn btn-primary">Edit</a></td>
+                <td>
+                    @can('edit-owner',$owner)
+                    <a type="button" href="{{ route('owner.edit', $owner->id)}}" class="btn btn-primary">Edit</a>
+                </td>
+                    @endcan
                 </tr>
             @endforeach
             </tbody>
