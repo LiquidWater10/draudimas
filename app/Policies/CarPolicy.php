@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Car;
+use App\Models\owner;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -37,8 +38,7 @@ class CarPolicy
      */
     public function update(User $user, Car $car): bool
     {
-        if($user->type==3){return true;}
-        return $car->user_id === $user->id;
+        return $user->type === 3 || $car->owner->user_id === $user->id;
     }
 
     /**
@@ -46,8 +46,7 @@ class CarPolicy
      */
     public function delete(User $user, Car $car): bool
     {
-        if($user->type==3){return true;}
-        return $car->user_id === $user->id;
+        return $user->type === 3 || $car->owner->user_id === $user->id;
     }
 
     /**

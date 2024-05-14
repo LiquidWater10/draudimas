@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\owner;
@@ -10,11 +11,6 @@ use App\Http\Requests\OwnerRequest;
 
 class OwnerController extends Controller
 {
-    public function __construct()
-    {
-        $this->authorizeResource(Car::class,'car');
-    }
-
     public function index(): View
     {
         return view('default');
@@ -39,7 +35,9 @@ class OwnerController extends Controller
 
     public function create(): View
     {
-        return view('owners.create');
+        return view('owners.create',[
+            'Users'=>user::all()
+        ]);
     }
 
     public function store(OwnerRequest $request)
@@ -51,6 +49,7 @@ class OwnerController extends Controller
         $owner->phone = $request->phone;
         $owner->email = $request->email;
         $owner->address = $request->address;
+        $owner->user_id = $request->user_id;
 
         $owner->save();
         return redirect()->route('home');
@@ -69,7 +68,8 @@ class OwnerController extends Controller
         $this->authorize('update', $owner);
         return view('owners.edit',
             [
-                'owner'=>owner::find($id)
+                'owner'=>owner::find($id),
+                'Users'=>user::all(),
             ]);
     }
 
@@ -82,6 +82,7 @@ class OwnerController extends Controller
         $owner->phone = $request->phone;
         $owner->email = $request->email;
         $owner->address = $request->address;
+        $owner->user_id = $request->user_id;
         $owner->save();
         return redirect()->route('home');
     }

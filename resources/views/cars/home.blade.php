@@ -24,13 +24,19 @@
                 <td>{{$car->brand}}</td>
                 <td>{{$car->model}}</td>
                 <td>
+                    @can('delete-car',$car)
                     <form method="post" action="{{ route('cars.destroy', $car->id) }}">
                         @csrf
                         @method("delete")
                         <button class="btn btn-danger">Delete</button>
                     </form>
+                    @endcan
                 </td>
-                    <td><a type="button" href="{{ route('cars.edit', $car->id)}}" class="btn btn-primary">Edit</a></td>
+                    <td>
+                    @can('edit-car',$car)
+                    <a type="button" href="{{ route('cars.edit', $car->id)}}" class="btn btn-primary">Edit</a>
+                    @endcan
+                    </td>
                 </tr>
             @endforeach
             </tbody>

@@ -11,15 +11,28 @@ use App\Http\Requests\CarRequest;
 
 class CarController extends Controller
 {
+    //a constructor, which puts the auth middleware to each route, that it controls.
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->authorizeResource(Car::class,'car');
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(): View
     {
-        return view('cars.home',
-            [
-                'cars'=>car::all()
-            ]);
+        $user = auth()->user();
+
+        if (auth()->user()->can('view-owner')) {
+            $cars = Car::all();
+        } else {
+            $cars = Car::whereHas('owner', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })->get();
+        }
+
+        return view('cars.home', ['cars' => $cars]);
     }
 
     /**
@@ -115,11 +128,5 @@ class CarController extends Controller
         $image_->delete();
         }
         return back();
-    }
-
-    //a constructor, which puts the auth middleware to each route, that it controls.
-    public function __construct()
-    {
-        $this->middleware('auth');
     }
 }

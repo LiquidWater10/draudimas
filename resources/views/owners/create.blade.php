@@ -43,6 +43,14 @@
         <input type="text" class="form-control  @error('address') is-invalid @enderror" id="address" placeholder="Enter your address" name="address" value="{{ old('address') }}">
             <div class="invalid-feedback">@error('address') {{ $message }} @enderror</div>
         </div>
+        <div class="mb-3">
+            <label for="user_id" class="form-label">Administrator:</label>
+            <select name="user_id" id="user_id" class="form-select">
+                @foreach($Users as $user)
+                    <option value={{$user->id}}> {{$user->email}}</option>
+                @endforeach
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary">{{ __("Submit") }}</button>
     </form>
     </div>

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Policies\OwnerPolicy;
+use App\Policies\CarPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\Car;
 use App\Models\Image;
@@ -39,6 +40,12 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('view-owner', function (User $user){
             return $user->type==2 || $user->type==3;
+        });
+        Gate::define('delete-car', function (User $user, car $car){
+            return $user->type === 3 || $car->owner->user_id === $user->id;
+        });
+        Gate::define('edit-car', function (User $user, car $car){
+            return $user->type === 3 || $car->owner->user_id === $user->id;
         });
     }
 }
